@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Create PDF Tool</title>
+  <style>
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e0e0e0; /* Page background grey */
+      color: #333;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Diagonal scrolling watermark */
+    body::before {
+      content: "Created by Bhawin Chaudhari • Created by Bhawin Chaudhari • ";
+      position: fixed;
+      top: 50%;
+      left: 100%;
+      font-size: 36px;
+      font-weight: bold;
+      color: rgba(0,0,0,0.05);
+      white-space: nowrap;
+      transform: rotate(-30deg) translateY(-50%);
+      animation: scrollDiagonal 40s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes scrollDiagonal {
+      0% { transform: rotate(-30deg) translateX(100%) translateY(-50%); }
+      100% { transform: rotate(-30deg) translateX(-150%) translateY(-50%); }
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1; /* ensure content is above watermark */
+    }
+
+    h1 {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+      color: #4CAF50; /* Light green color */
+    }
+
+    .box {
+      background-color: #fff; /* Box remains white */
+      border: 1px solid #ddd;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    /* Red blinking label */
+    form label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+      color: red;
+      animation: blink 1s step-start 0s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* File input box styling */
+    input[type=file] {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 16px;
+      border: 2px solid #000; /* Black border for input box */
+      border-radius: 6px;     /* Rounded corners */
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: 1px solid #000;
+      background: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      transition: all 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .footer .copyright {
+      color: blue;
+      margin-top: 4px;
+      display: block;
+    }
+
+    @media (min-width: 480px) {
+      button {
+        width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to Card Create PDF Tool</h1>
+    <div class="box">
+      <form method="POST" enctype="multipart/form-data">
+        <label for="pdf_files">Upload PDFs (multiple allowed)</label>
+        <input type="file" id="pdf_files" name="pdf_files" multiple required />
+        <button type="submit">Process PDFs</button>
+      </form>
+    </div>
+    <div class="footer">
+      Created by 2l Wala
+      <span class="copyright">© Bhawin Chaudhari. Developed and owned exclusively. All rights reserved.</span>
+    </div>
+  </div>
+</body>
+</html>
