@@ -1,0 +1,10 @@
+Flask
+pdf2image
+Pillow
+Werkzeug
+razorpay
+pillow
+reportlab
+setuptools
+wheel
+fpdf2

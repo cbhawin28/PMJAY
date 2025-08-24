@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complete Payment</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+body{font-family:Arial,sans-serif;background:#fff8f8;margin:0;padding:0}
+.container{max-width:450px;margin:60px auto;padding:25px;border-radius:12px;background:#ffe6e6;border:2px solid #f08080;text-align:center}
+h2{color:#4d2c2c;margin-bottom:20px}
+button{padding:12px 35px;font-size:16px;border:none;border-radius:8px;background:#4CAF50;color:#fff;font-weight:bold;cursor:pointer}
+button:hover{background:#2e7d32}
+.flash-wrap{margin-bottom:15px}
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Complete Payment</h2>
+  <p>Plan: <strong>3 Months Subscription</strong></p>
+  <p>Amount: <strong>₹149</strong></p>
+
+  <div class="flash-wrap">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{category}}" style="padding:10px;border-radius:8px;margin:8px;background:#fff;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <button id="rzp-button1">Pay Now</button>
+
+  <form id="payment-success-form" action="{{ url_for('payment_success') }}" method="POST" style="display:none;">
+    <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+    <input type="hidden" name="razorpay_order_id" id="razorpay_order_id">
+    <input type="hidden" name="razorpay_signature" id="razorpay_signature">
+  </form>
+</div>
+
+<script>
+var options = {
+    "key": "{{ key_id }}",
+    "amount": "{{ amount }}",
+    "currency": "INR",
+    "name": "PrintPerfect A4",
+    "description": "3 Months Subscription",
+    "order_id": "{{ order_id }}",
+    "handler": function(response){
+        document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+        document.getElementById('razorpay_order_id').value = response.razorpay_order_id;
+        document.getElementById('razorpay_signature').value = response.razorpay_signature;
+        document.getElementById('payment-success-form').submit();
+    },
+    "prefill": {
+        "name": "{{ username }}",
+        "email": "{{ email }}",
+        "contact": "{{ phone }}"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+</body>
+</html>

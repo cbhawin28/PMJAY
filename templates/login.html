@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - PRINT PERFECT A4</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; color: #333; }
+    .container {
+      display: flex;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 20px;
+      gap: 40px;
+    }
+    .content {
+      flex: 2;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    table th {
+      background: #f1f1f1;
+      text-align: left;
+      padding: 12px;
+      font-size: 18px;
+    }
+    table td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      font-size: 16px;
+    }
+    .login-box {
+      flex: 1;
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      min-width: 350px;
+    }
+    h2 { color: #004aad; margin-bottom: 20px; }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button, .google-btn {
+      width: 100%;
+      padding: 12px;
+      background: #004aad;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: background 0.2s;
+    }
+    button:hover, .google-btn:hover { background: #003080; }
+    .google-btn {
+      background: #fff;
+      color: #444;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .google-btn img {
+      height: 20px;
+      width: 20px;
+    }
+    .links { margin-top: 15px; text-align: center; font-size: 14px; }
+    .links a { color: #004aad; text-decoration: none; }
+    ul { color: red; }
+    .success { color: green; }
+    @media (max-width: 900px) {
+      .container { flex-direction: column; gap: 0; }
+      .login-box { margin-top: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 style="text-align:center; background:#004aad; color:#fff; padding:30px 15px;">🖨️ PRINT PERFECT A4</h1>
+    <p style="text-align:center; background:#004aad; color:#fff; font-size:18px; margin:0;">💳 “Arrange any ID card, fit perfectly on A4. Print-ready in just one click.”</p>
+  </header>
+  <div class="container">
+    <!-- Left Side Content (Table) -->
+    <div class="content">
+      <table>
+        <tr>
+          <th>✨ Features</th>
+        </tr>
+        <tr><td>✂️ Auto Crop & Resize – perfect size every time.</td></tr>
+        <tr><td>📄 A4 Layout (10 per page) – print-ready in bulk.</td></tr>
+        <tr><td>🔄 Duplex Support – front & back auto-aligned.</td></tr>
+        <tr><td>🖼️ High Quality PDF (300 DPI) – sharp, professional print.</td></tr>
+        <tr>
+          <th>✅ Useful For</th>
+        </tr>
+        <tr><td>🏥 Ayushman (PMJAY) cards</td></tr>
+        <tr><td>👷 eShram cards</td></tr>
+        <tr><td>🎓 Student / Staff ID cards</td></tr>
+        <tr><td>🪪 Any custom ID cards</td></tr>
+        <tr>
+          <th>🖨️ Simple Steps</th>
+        </tr>
+        <tr><td>1️⃣ Upload PDF / Images</td></tr>
+        <tr><td>2️⃣ Auto Crop + Arrange</td></tr>
+        <tr><td>3️⃣ Download Print-Ready PDF</td></tr>
+        <tr><td>👉 No manual cutting • No alignment issues • 100% time saving!</td></tr>
+      </table>
+    </div>
+    <!-- Login Form -->
+    <div class="login-box">
+      <h2>🔐 Login to Get Started</h2>
+      <p>Welcome back! Sign in to access your dashboard.</p>
+      <form method="POST" action="{{ url_for('login') }}">
+        <input type="text" name="email" placeholder="Email / Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+      <form method="GET" action="/google-login">
+        <button type="submit" class="google-btn">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+          Login with Google
+        </button>
+      </form>
+      <div class="links">
+        New user? <a href="{{ url_for('signup') }}">Register Here</a><br>
+        Forgot password? <a href="#">Reset Now</a>
+      </div>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul>
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+      <!-- Sample Image Section -->
+      <div style="margin-top:30px; text-align:center;">
+        <h3>Sample ID Card Preview</h3>
+        <img src="{{ url_for('static', filename='sample_card.png') }}" alt="Sample ID Card" style="max-width:90%; border-radius:8px; box-shadow:0 2px 8px #ccc;">
+        <p style="font-size:13px; color:#555;">This is a sample preview. Your uploaded cards will appear like this.</p>
+      </div>
+    </div>
+  </div>
+  <footer style="text-align:center; padding:20px; margin-top:20px; font-size:14px; color:#555;">
+    ⚡ Smart Printing. Perfect Alignment. Zero Hassle.
+  </footer>
+</body>
+</html>
