@@ -1,14 +1,10 @@
+requests
 Flask
 pdf2image
-<<<<<<< HEAD
 Pillow
 Werkzeug
 razorpay
-pillow
 reportlab
 setuptools
 wheel
 fpdf2
-=======
-Pillow
->>>>>>> e81a618958953eed519557e72e2840425b449ba2
